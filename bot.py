@@ -6,7 +6,7 @@ TOKEN = os.environ["BOT_TOKEN"]
 CHANNEL_ID = os.environ["CHANNEL_ID"]
 MESSAGE_ID = int(os.environ["MESSAGE_ID"])
 
-TARGET_DATE = datetime(2027, 1, 1, tzinfo=timezone.utc)
+TARGET_DATE = datetime(2026, 11, 6, tzinfo=timezone.utc)
 
 
 def get_days_left():
@@ -15,7 +15,7 @@ def get_days_left():
 
 
 def main():
-    text = f"⏳ До 1 января 2027 года осталось: {get_days_left()} дней"
+    text = f"⏳ До 6 ноября осталось: {get_days_left()} дней"
 
     bot = Bot(token=TOKEN)
 
