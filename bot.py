@@ -14,7 +14,7 @@ async def main():
     now = datetime.now(timezone.utc)
     days_left = max(0, (TARGET_DATE - now).days)
 
-    text = f"⏳ До получения прав осталось: {days_left} дней"
+    text = f"⏳ До получения водительских прав на имя Сергея осталось: {days_left} дней"
 
     async with Bot(token=TOKEN) as bot:
         await bot.edit_message_text(
