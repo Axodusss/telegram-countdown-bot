@@ -1,4 +1,5 @@
 import os
+import asyncio
 from datetime import datetime, timezone
 from telegram import Bot
 
@@ -9,27 +10,21 @@ MESSAGE_ID = int(os.environ["MESSAGE_ID"])
 TARGET_DATE = datetime(2026, 11, 6, tzinfo=timezone.utc)
 
 
-def get_days_left():
+async def main():
     now = datetime.now(timezone.utc)
-    return max(0, (TARGET_DATE - now).days)
+    days_left = max(0, (TARGET_DATE - now).days)
 
+    text = f"⏳ До 6 ноября осталось: {days_left} дней"
 
-def main():
-    text = f"⏳ До 6 ноября осталось: {get_days_left()} дней"
-
-    bot = Bot(token=TOKEN)
-
-    import asyncio
-
-    async def update():
+    async with Bot(token=TOKEN) as bot:
         await bot.edit_message_text(
             chat_id=CHANNEL_ID,
             message_id=MESSAGE_ID,
             text=text
         )
 
-    asyncio.run(update())
+    print(f"Сообщение обновлено: {text}")
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
