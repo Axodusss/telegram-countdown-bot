@@ -12,9 +12,12 @@ TARGET_DATE = datetime(2026, 11, 6, tzinfo=timezone.utc)
 
 async def main():
     now = datetime.now(timezone.utc)
-    days_left = max(0, (TARGET_DATE - now).days)
 
-    text = f"⏳ Осталось {days_left} дней до получения водительских прав на имя Сергея ⏳"
+    if now >= TARGET_DATE:
+        text = "🎉 Сегодня можно получать права!"
+    else:
+        days_left = (TARGET_DATE - now).days
+        text = f"⏳ Осталось {days_left} дней до получения водительских прав на имя Сергея ⏳"
 
     async with Bot(token=TOKEN) as bot:
         await bot.edit_message_text(
