@@ -14,7 +14,7 @@ async def main():
     now = datetime.now(timezone.utc)
 
     if now >= TARGET_DATE:
-        text = "🎉 Сегодня можно получать права!"
+        text = "🎉 Сегодня можно получать права!😎 🏎️ 💸"
     else:
         days_left = (TARGET_DATE - now).days
         text = f"⏳ Осталось {days_left} дней до получения водительских прав на имя Сергея ⏳"
