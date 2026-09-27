@@ -20,11 +20,17 @@ async def main():
         text = f"⏳ Осталось {days_left} дней до получения водительских прав на имя Сергея ⏳"
 
     async with Bot(token=TOKEN) as bot:
-        await bot.edit_message_text(
-            chat_id=CHANNEL_ID,
-            message_id=MESSAGE_ID,
-            text=text
-        )
+        try:
+            await bot.edit_message_text(
+                chat_id=CHANNEL_ID,
+                message_id=MESSAGE_ID,
+                text=text)
+            print("Сообщение успешно обновлено.")
+        except Exception as e:
+            if "Message is not modified" in str(e):
+                print("Сообщение уже содержит актуальный текст.")
+            else:
+                raise
 
     print(f"Сообщение обновлено: {text}")
 
