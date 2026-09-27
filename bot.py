@@ -1,22 +1,23 @@
 import os
 import asyncio
-from datetime import datetime, timezone
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from telegram import Bot
 
 TOKEN = os.environ["BOT_TOKEN"]
 CHANNEL_ID = os.environ["CHANNEL_ID"]
 MESSAGE_ID = int(os.environ["MESSAGE_ID"])
 
-TARGET_DATE = datetime(2026, 11, 6, tzinfo=timezone.utc)
+TARGET_DATE = datetime(2026, 11, 6, tzinfo=ZoneInfo("Europe/Moscow"))
 
 
 async def main():
-    now = datetime.now(timezone.utc)
+    now = datetime.now(ZoneInfo("Europe/Moscow"))
 
-    if now >= TARGET_DATE:
+    if now.date() >= TARGET_DATE.date():
         text = "🎉 Сегодня можно получать права, поздравляю Вас, Сергей!😎 🏎️ 💸"
     else:
-        days_left = (TARGET_DATE - now).days
+        days_left = (TARGET_DATE.date() - now.date()).days
         text = f"⏳ Осталось {days_left} дней до получения водительских прав на имя Сергея ⏳"
 
     async with Bot(token=TOKEN) as bot:
@@ -24,15 +25,15 @@ async def main():
             await bot.edit_message_text(
                 chat_id=CHANNEL_ID,
                 message_id=MESSAGE_ID,
-                text=text)
-            print("Сообщение успешно обновлено.")
+                text=text
+            )
+            print(f"Сообщение обновлено: {text}")
+
         except Exception as e:
             if "Message is not modified" in str(e):
                 print("Сообщение уже содержит актуальный текст.")
             else:
                 raise
-
-    print(f"Сообщение обновлено: {text}")
 
 
 if __name__ == "__main__":
